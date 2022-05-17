@@ -5,7 +5,7 @@ Federico Silibestre
 Martin Blassón
 Julio Dorado
 
-#### [Repositorio](https://nodejs.org/)
+#### [Repositorio](https://github.com/silibestref/TP2_INTEGRADOR_MoviesYa.git)
 
 # _Movie-Ya_
 ## _Tu Lugar para alquilar peliculas_
