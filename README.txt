@@ -42,6 +42,7 @@ app.put('/actualizarPelicula/:codigo'
 | Chai | [https://www.chaijs.com/guide/plugins/][PlDb] |
 | Chai-spies | [https://www.chaijs.com/plugins/chai-spies/][PlDb] |
 | Body-Parser | [https://www.npmjs.com/package/body-parser][PlDb] |
+| Morgan | [https://expressjs.com/en/resources/middleware/morgan.html][PlDb] |
 
 
 
