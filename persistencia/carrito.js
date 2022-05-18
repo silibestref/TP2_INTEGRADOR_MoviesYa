@@ -1,5 +1,6 @@
 
 let carrito = [
+    /*
     {
         codigo: 1111,
         titulo: "Terminator",
@@ -25,6 +26,7 @@ let carrito = [
         titulo: "Depredador",
         genero: "Accion",
       }
+      */
 ];
 
 module.exports = carrito;
