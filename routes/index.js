@@ -1,31 +1,36 @@
 const express = require("express");
 const app = express.Router();
-const peliculas = require('../peliculas');
+const peliculas = require('../persistencia/peliculas');
+const service = require ('../capa_negocio/servicio')
 
 
 app.get('/',(req,res)=>{
     res.sendStatus(200);
 })
 
-app.get('/listarPeliculas',(req,res)=>{
-  console.log(peliculas);
-  res.json(peliculas);
+
+/*             CRUD del catalogo              */
+
+app.get('/catalogo',(req,res)=>{
+  res.json(service.catalogoListar());
 })
 
-app.post('/agregarPelicula', (req, res) => {
-  console.log(req.body)
-  peliculas.push(req.body)
-  res.json(req.body);
+app.get('/catalogo/buscarPelicula/:codigo', (req, res) => {
+  id = Number(req.params.codigo);
+  resultado = service.catalogoBuscar(id);
+  console.log(resultado);
+  res.send(resultado)
 })
 
-app.delete('/eliminarPelicula/:codigo', (req, res) => {
-  req.params.codigo = Number(req.params.codigo)
-  const indice = peliculas.map(pel => pel.codigo).indexOf(req.params.codigo);
-  let peliculaEliminada = [];
-  if(indice >= 0){
-    peliculaEliminada = peliculas.splice(indice,1);
-  }
-  res.json(peliculaEliminada)
+app.post('/catalogo/agregarPelicula', (req, res) => {
+  respuesta = service.catalogoAgregar(req.body);
+  res.json(respuesta);
+})
+
+app.delete('/catalogo/eliminarPelicula/:codigo', (req, res) => {
+  id = Number(req.params.codigo)
+  resultado = service.catalogoEliminar(id);
+  res.json(resultado)
 })
 
 app.put('/actualizarPelicula/:codigo', (req, res) => {
@@ -38,5 +43,25 @@ app.put('/actualizarPelicula/:codigo', (req, res) => {
   } 
   res.send(msj)
 })
+
+/*        CRUD en el Carrito       */
+
+app.post('/carrito/agregarPelicula/:codigo', function(req,res){
+  id = Number(req.params.codigo);
+  resultado = service.agregarPelicula(id);
+  res.json(resultado);
+})
+
+app.delete('/carrito/borrarPelicula/:codigo', function(req,res){
+  id = Number(req.params.codigo);
+  resultado = service.borrarPelicula(id);
+  res.json(resultado);
+})
+
+app.get('/carrito/alquilar', function(req,res){
+  resultado = service.confirmarCarrito();
+  res.json(resultado);
+})
+
 
 module.exports = app;
