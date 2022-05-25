@@ -9,7 +9,7 @@ module.exports = {
 
     catalogoBuscar : function(id){
         let resultado = 'Ups, lo siento! Por el momento no tenemos esa pelicula';
-        const indice = peliculas.map(pel => pel.codigo).indexOf(id);
+        const indice = peliculas.map(pel => pel.codigo).indexOf(id);        
         if(indice >= 0){    
             resultado = peliculas[indice];
         }
