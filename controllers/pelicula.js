@@ -1,38 +1,34 @@
-const peliculas = require('../persistencia/peliculas');
-const carrito = require ('../persistencia/carrito');
+const { repositorioPeliculas } = require('../repositories/peliculas')
+const { carrito } = require('../repositories/carrito')
 
 module.exports = {
-
     catalogoListar : function(){
-        return peliculas;
+        return repositorioPeliculas;
     },
-
     catalogoBuscar : function(id){
         let resultado = 'Ups, lo siento! Por el momento no tenemos esa pelicula';
-        const indice = peliculas.map(pel => pel.codigo).indexOf(id);        
+        const indice = repositorioPeliculas.map(pel => pel.codigo).indexOf(id);        
         if(indice >= 0){    
-            resultado = peliculas[indice];
+            resultado = repositorioPeliculas[indice];
         }
         return resultado;
     },
-
     catalogoAgregar: function(obj){
-        peliculas.push(obj)
+        repositorioPeliculas.push(obj)
         return obj;
     },
-
     catalogoEliminar : function(id){
-        const indice = peliculas.map(pel => pel.codigo).indexOf(id);
+        const indice = repositorioPeliculas.map(pel => pel.codigo).indexOf(id);
         let peliculaEliminada = [];
         if(indice >= 0){
-            peliculaEliminada = peliculas.splice(indice,1);
+            peliculaEliminada = repositorioPeliculas.splice(indice,1);
         }
         return peliculaEliminada;
     },
 
     agregarPelicula : function(id) {
-        const indice = peliculas.map(pel => pel.codigo).indexOf(id);
-        carrito.push(peliculas[indice]);
+        const indice = repositorioPeliculas.map(pel => pel.codigo).indexOf(id);
+        carrito.push(repositorioPeliculas[indice]);
         return carrito;
     },
     borrarPelicula : function(id) {
