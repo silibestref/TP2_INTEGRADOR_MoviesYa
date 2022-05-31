@@ -29,7 +29,7 @@ describe('#Movies Ya!', () => {
             chai.request(app)
             .get(`/catalogo/${codigoPelicula}`)
             .end((err,res)=>{
-                expect(res.data).to.not.equal('Ups, lo siento! Por el momento no tenemos esa pelicula');
+                expect(res.text).to.not.equal('Ups, lo siento! Por el momento no tenemos esa pelicula');
             }) 
         });
         it("Agregar Pelicula", async () => {
