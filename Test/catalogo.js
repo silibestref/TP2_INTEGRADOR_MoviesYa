@@ -20,7 +20,7 @@ describe('#Movies Ya!', () => {
             chai.request(app)
             .get(`/catalogo/`)
             .end((err,res)=>{
-                expect(res).to.be.json
+                expect(res.body).with.lengthOf(5);
             })    
         });
         it("Buscar Pelicula", async () => {
@@ -42,9 +42,8 @@ describe('#Movies Ya!', () => {
               titulo: "Comando",
               genero: "Accion"
             })
-            .end((_, res) => {
-                expect(res).to.have.status(201)
-                expect(res).to.be.json
+            .end((err, res) => {
+                expect(res.body).to.eql({codigo: 6666, titulo: "Comando", genero: "Accion"})
             })   
         });
 
@@ -54,7 +53,7 @@ describe('#Movies Ya!', () => {
             chai.request(app)
             .delete(`/catalogo/${codigoPelicula}`)
             .end((err,res)=>{
-                expect(res).to.be.json
+                expect(res.body).with.lengthOf(1)
             })    
         });
         /*

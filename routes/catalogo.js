@@ -8,14 +8,20 @@ app.get('/', (req, res) => {
 })
 
 app.get('/:codigo', (req, res) => {
+  let msj;
+  const peliculaDisp = 3;
   id = Number(req.params.codigo);
   resultado = servicePelicula.catalogoBuscar(id);
-  res.send(resultado)
+  if(resultado.length === peliculaDisp){
+    msj = 'Hoy es tu dia de suerte, la pelicula esta disponible.';
+  }else{
+    msj = 'Ups, lo siento! Por el momento no tenemos esa pelicula.';
+  }
+  res.send(msj)
 })
 
 app.post('/', (req, res) => {
   respuesta = servicePelicula.catalogoAgregar(req.body);
-  res.status(201);
   res.json(respuesta);
 })
 
