@@ -1,31 +1,30 @@
 const express = require("express");
 const app = express.Router();
-const peliculas = require('../persistencia/peliculas');
-const service = require ('../capa_negocio/servicio')
-
+const servicePelicula = require ('../controllers/pelicula')
 
 app.get('/', (req, res) => {
-  respuesta = service.catalogoListar();
+  respuesta = servicePelicula.catalogoListar();
   res.json(respuesta);
 })
 
 app.get('/:codigo', (req, res) => {
   id = Number(req.params.codigo);
-  resultado = service.catalogoBuscar(id);
+  resultado = servicePelicula.catalogoBuscar(id);
   res.send(resultado)
 })
 
 app.post('/', (req, res) => {
-  respuesta = service.catalogoAgregar(req.body);
+  respuesta = servicePelicula.catalogoAgregar(req.body);
+  res.status(201);
   res.json(respuesta);
 })
 
 app.delete('/:codigo', (req, res) => {
   id = Number(req.params.codigo)
-  resultado = service.catalogoEliminar(id);
+  resultado = servicePelicula.catalogoEliminar(id);
   res.json(resultado)
 })
-
+/*
 app.put('/:codigo', (req, res) => {
   req.params.codigo = Number(req.params.codigo);
   let msj = 'No se logro actualizar el registro';
@@ -36,5 +35,5 @@ app.put('/:codigo', (req, res) => {
   } 
   res.send(msj)
 })
-
+*/
 module.exports = app;

@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const routes = require('./routes/');
+const routes = require('./routes/index');
 const catalogo = require('./routes/catalogo.js');
 const carrito = require('./routes/carrito.js');
 
@@ -23,3 +23,6 @@ app.use('/catalogo', catalogo);
 app.listen(app.get('port'), () => {
   console.log('Server is in port', app.get('port'));
 });
+
+
+module.exports = app;

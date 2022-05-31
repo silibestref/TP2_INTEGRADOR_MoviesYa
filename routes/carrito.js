@@ -1,21 +1,21 @@
 const express = require("express");
 const app = express.Router();
-const service = require ('../capa_negocio/servicio')
+const servicePelicula = require ('../controllers/pelicula')
 
 app.post('/:codigo', function(req,res){
   id = Number(req.params.codigo);
-  resultado = service.agregarPelicula(id);
+  resultado = servicePelicula.agregarPelicula(id);
   res.json(resultado);
 })
 
 app.delete('/:codigo', function(req,res){
   id = Number(req.params.codigo);
-  resultado = service.borrarPelicula(id);
+  resultado = servicePelicula.borrarPelicula(id);
   res.json(resultado);
 })
 
 app.get('/alquilar', function(req,res){
-  resultado = service.confirmarCarrito();
+  resultado = servicePelicula.confirmarCarrito();
   res.json(resultado);
 })
 
