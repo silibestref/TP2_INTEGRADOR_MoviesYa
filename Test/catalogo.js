@@ -9,13 +9,11 @@ const { describe } = require('mocha')
 const app = require('../index')
 const { expect } = chai
 
-
 chai.use(chaiHttp)
 
 describe('#Movies Ya!', () => {
-    describe('Pruebas del catalogo', () => {
-
-        it("Listar Peliculas", async () => {
+    describe("GET /catalogo", () => {
+        it("Lista Peliculas", async () => {
             //const response = await axios.get(`${baseURL}/catalogo/`);
             chai.request(app)
             .get(`/catalogo/`)
@@ -23,7 +21,9 @@ describe('#Movies Ya!', () => {
                 expect(res.body).with.lengthOf(5);
             })    
         });
-        it("Buscar Pelicula", async () => {
+    }),    
+    describe("GET /catalogo/:id", () => {    
+        it("Busca Pelicula", async () => {
             const codigoPelicula = 4444;
             //const msj = await axios.get(`${baseURL}/catalogo/${codigoPelicula}`);
             chai.request(app)
@@ -32,22 +32,44 @@ describe('#Movies Ya!', () => {
                 expect(res.text).to.not.equal('Ups, lo siento! Por el momento no tenemos esa pelicula');
             }) 
         });
-        it("Agregar Pelicula", async () => {
-            // const nuevaPelicula = { codigo: 6666, titulo: "Comando", genero: "Accion" };
+    }),    
+    describe("POST /catalogo", () => {   
+        it("Agrega Pelicula", async () => {
+            // const nuevaPelicula = { codigo: 6666, titulo: "Matrix", genero: "Accion" };
             //const peliculaAgregada = await axios.post(`${baseURL}/catalogo/`, nuevaPelicula)
             chai.request(app)
             .post("/catalogo/")
             .send({
               codigo: 6666,
-              titulo: "Comando",
+              titulo: "Matrix",
               genero: "Accion"
             })
             .end((err, res) => {
-                expect(res.body).to.eql({codigo: 6666, titulo: "Comando", genero: "Accion"})
+                expect(res.body).to.eql({codigo: 6666, titulo: "Matrix", genero: "Accion", estaAlquilada:false})
             })   
         });
-
-        it("Eliminar pelicula", async () => {
+    }), 
+    describe("POST /catalogo", () => {   
+        describe("Agrega Pelicula", () => {    
+            it("Captura error al intentar insertar pelicula duplicada", async () => {
+                // const nuevaPelicula = { codigo: 6666, titulo: "Matrix", genero: "Accion" };
+                //const peliculaAgregada = await axios.post(`${baseURL}/catalogo/`, nuevaPelicula)
+                chai.request(app)
+                .post("/catalogo/")
+                .send({
+                  codigo: 6666,
+                  titulo: "Matrix",
+                  genero: "Accion"
+                })
+                .end((err, res) => {
+                    console.log(err)
+                    expect(err).to.throw(MismaPeliculaException)
+                })   
+            });
+        })    
+    }), 
+    describe("DELETE /catalogo/:id", () => {
+        it("Elimina pelicula", async () => {
             const codigoPelicula = 3333;
             //const eliminado = await axios.delete(`${baseURL}/catalogo/${codigoPelicula}`);
             chai.request(app)
@@ -56,20 +78,19 @@ describe('#Movies Ya!', () => {
                 expect(res.body).with.lengthOf(1)
             })    
         });
-        /*
-        it("Update Pelicula", async () => {
-            const codigoPelicula = 4444;
-            //const msj = await axios.put(`${baseURL}/catalogo/${codigoPelicula}`, { titulo: "Kill Bill" });
-            chai.request(app)
-            .put(`/catalogo/${codigoPelicula}`)
-            .send({
-                titulo: "Kill Bill" 
-              })
-            .end((err,res)=>{
-                expect(res).to.be.text
-            }) 
-            
-        });
-        */
-    });
+    })
+    describe("DELETE /catalogo/:id", () => {
+        describe("Elimina pelicula", () => {
+            it("Captura error al intentar eliminar pelicula inexistente", async () => {
+                const codigoPelicula = 9999;
+                //const eliminado = await axios.delete(`${baseURL}/catalogo/${codigoPelicula}`);
+                chai.request(app)
+                .delete(`/catalogo/${codigoPelicula}`)
+                .end((err,res)=>{
+                    console.log(err)
+                    expect(err).to.throw(NoExistePeliculaException)
+                })    
+            });
+        })
+    })  
 });

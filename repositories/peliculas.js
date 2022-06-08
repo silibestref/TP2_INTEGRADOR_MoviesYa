@@ -1,6 +1,6 @@
 const Pelicula = require('../models/pelicula')
 
-const repositorioPeliculas = [
+const catalogo = [
   new Pelicula(1111, "Terminator","Accion"),
   new Pelicula(2222, "Rocky","Accion"),
   new Pelicula(3333, "Freddy Krueger","Terror"),
@@ -8,8 +8,9 @@ const repositorioPeliculas = [
   new Pelicula(5555, "Depresador","Accion")
 ];
 
+
 module.exports = {
-  repositorioPeliculas
+  catalogo
 }
 
   

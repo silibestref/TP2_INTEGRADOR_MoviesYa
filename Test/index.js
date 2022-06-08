@@ -11,12 +11,14 @@ const { expect } = chai
 chai.use(chaiHttp)
 
 describe("MoviesYa!", () => {
-    it("Conectividad", async () => {
-      // const response = await axios.get(baseURL)
+  describe("GET /", () => {
+    it("Prueba disponibilidad server", async () => {
+        // const response = await axios.get(baseURL)
       chai.request(app)
         .get('/')
         .end((err,res)=>{
           expect(res.status).to.equal(200);
         })  
     })
+  });
 });
