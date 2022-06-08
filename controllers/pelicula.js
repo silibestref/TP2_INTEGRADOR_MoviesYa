@@ -1,49 +1,53 @@
-const { repositorioPeliculas } = require('../repositories/peliculas')
-const { carrito } = require('../repositories/carrito')
+const servicePelicula = require ('../services/pelicula');
+const Pelicula = require('../models/pelicula');
 
-module.exports = {
-    catalogoListar : function(){
-        return repositorioPeliculas;
+module.exports = {  
+    
+    getPeliculasCatalogoController: (req,res)=>{
+        let respuesta = servicePelicula.catalogoListar();
+        res.json(respuesta);
     },
-    catalogoBuscar : function(id){
-        let resultado = 'Ups, lo siento! Por el momento no tenemos esa pelicula';
-        const indice = repositorioPeliculas.map(pel => pel.codigo).indexOf(id);        
-        if(indice >= 0){    
-            resultado = repositorioPeliculas[indice];
+    getPeliculaCatalogoController: (req,res)=>{
+        let id = Number(req.params.codigo);
+        let resultado = servicePelicula.catalogoBuscar(id);
+        res.send(resultado)
+    },
+    postPeliculaCatalogoController: (req, res)=>{
+        const { codigo, titulo, genero } = req.body
+        const pelicula = new Pelicula(codigo, titulo, genero)
+        try {
+            servicePelicula.catalogoAgregar(pelicula);
+            res.json(pelicula)
+        } 
+        catch (error) {
+            console.error(error.message); 
         }
-        return resultado;
     },
-    catalogoAgregar: function(obj){
-        repositorioPeliculas.push(obj)
-        return obj;
-    },
-    catalogoEliminar : function(id){
-        const indice = repositorioPeliculas.map(pel => pel.codigo).indexOf(id);
-        let peliculaEliminada = [];
-        if(indice >= 0){
-            peliculaEliminada = repositorioPeliculas.splice(indice,1);
+    deletePeliculaCatalogoController: (req, res)=>{
+        let id = Number(req.params.codigo)
+        try {
+            let resultado = servicePelicula.catalogoEliminar(id);
+            res.json(resultado);
+        } 
+        catch (error) {
+            console.error(error.message);
         }
-        return peliculaEliminada;
     },
 
-    agregarPelicula : function(id) {
-        const indice = repositorioPeliculas.map(pel => pel.codigo).indexOf(id);
-        carrito.push(repositorioPeliculas[indice]);
-        return carrito;
+    postPeliculaCarritoController: (req, res)=>{
+        let id = Number(req.params.codigo);
+        let resultado = servicePelicula.carritoAgregar(id);
+        res.json(resultado);
     },
-    borrarPelicula : function(id) {
-        const indice = carrito.map(pel => pel.codigo).indexOf(id);
-        let peliculaEliminada = [];
-        if(indice >= 0){
-            peliculaEliminada = carrito.splice(indice,1);
-        }
-        return peliculaEliminada;
+    deletePeliculaCarritoController: (req, res)=>{
+        let id = Number(req.params.codigo);
+        let resultado = servicePelicula.carritoEliminar(id);
+        res.json(resultado);
     },
-    confirmarCarrito : function() {
-        return carrito;
+    getPeliculasCarritoController: (req,res)=>{
+        let resultado = servicePelicula.carritoMostrarAlquileres();
+        res.json(resultado);
     }
 
+
 }
-
-
-

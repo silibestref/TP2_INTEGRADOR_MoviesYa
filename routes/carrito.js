@@ -1,23 +1,11 @@
 const express = require("express");
+const { getPeliculasCarritoController, postPeliculaCarritoController, deletePeliculaCarritoController} =  require ('../controllers/pelicula');
 const app = express.Router();
-const servicePelicula = require ('../controllers/pelicula')
 
-app.post('/:codigo', function(req,res){
-  id = Number(req.params.codigo);
-  resultado = servicePelicula.agregarPelicula(id);
-  res.json(resultado);
-})
+app.get('/', getPeliculasCarritoController);
 
-app.delete('/:codigo', function(req,res){
-  id = Number(req.params.codigo);
-  resultado = servicePelicula.borrarPelicula(id);
-  res.json(resultado);
-})
+app.post('/:codigo', postPeliculaCarritoController);
 
-app.get('/alquilar', function(req,res){
-  resultado = servicePelicula.confirmarCarrito();
-  res.json(resultado);
-})
-
+app.delete('/:codigo', deletePeliculaCarritoController);
 
 module.exports = app;
