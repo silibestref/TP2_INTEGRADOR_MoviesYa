@@ -20,7 +20,7 @@ describe('#Movies Ya!', () => {
             chai.request(app)
             .post(`/carrito/${peli.codigo}`)
             .end((err,res)=>{
-                expect(res.body[0]).to.eql({codigo:2222, titulo:"Rocky", genero:"Accion", estaAlquilada:false})
+                expect(res.body[0]).to.eql({codigo:2222, titulo:"Rocky", genero:"Accion", estaAlquilada:true})
             })
         })
     }),    
@@ -29,8 +29,7 @@ describe('#Movies Ya!', () => {
             //const response = await axios.get(`${baseURL}/catalogo/`);
             chai.request(app)
             .get(`/carrito/`)
-            .end((err,res)=>{
-                console.log(res.body);
+            .end((err,res)=>{                
                 expect(res.body).with.lengthOf(1);
             })    
         });
@@ -42,7 +41,7 @@ describe('#Movies Ya!', () => {
             chai.request(app)
             .delete(`/carrito/${peli.codigo}`)
             .end((err,res)=>{
-                expect(res.body.pop()).to.eql({codigo:2222, titulo:"Rocky", genero:"Accion", estaAlquilada:false})
+                expect(res.body.pop()).to.eql({codigo:2222, titulo:"Rocky", genero:"Accion", estaAlquilada:true})
             })
         })
     })

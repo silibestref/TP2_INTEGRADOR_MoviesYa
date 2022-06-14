@@ -39,14 +39,18 @@ module.exports = {
         const indice = this.buscarPelicula(catalogo,id);
         if(indice >= 0){
             carrito.push(catalogo[indice]);
+            catalogo[indice].alquilar();
         }
         return carrito;
     },
     carritoEliminar : function(id) {
-        const indice = this.buscarPelicula(carrito,id); 
+        const indice = this.buscarPelicula(carrito,id);
+        catalogo[indice].devolver();
         let peliculaEliminada = [];
         if(indice >= 0){
             peliculaEliminada = carrito.splice(indice,1);
+            
+            
         }
         return peliculaEliminada;
     },

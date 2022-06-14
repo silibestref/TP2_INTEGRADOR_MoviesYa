@@ -1,7 +1,7 @@
 const express = require('express');
 const createError = require('http-errors');
 const app = express();
-const morgan = require('morgan');
+//const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const routes = require('./routes/index');
 const catalogo = require('./routes/catalogo.js');
@@ -12,7 +12,7 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(morgan("dev"));
+//app.use(morgan("dev"));
 
 // routes
 app.use("/",routes);
