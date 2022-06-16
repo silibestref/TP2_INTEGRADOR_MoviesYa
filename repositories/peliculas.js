@@ -8,9 +8,32 @@ const catalogo = [
   new Pelicula(5555, "Depresador","Accion")
 ];
 
+const repositorioCatalogo = {
+  verCatalogo: () => {
+    return catalogo;
+  },
+  incorporarPelicula: (pelicula) => {
+    catalogo.push(pelicula)
+  },
+  buscarPelicula : function(id){
+    return catalogo.map(pel => pel.codigo).indexOf(id);
+  },
+  pedirPelicula : function (id){
+    return catalogo[id];
+  },
+  eliminarPelicula: (indice) => {
+    return catalogo.splice(indice,1);
+  },
+  alquilarPelicula: (indice) => {
+    catalogo[indice].alquilar();
+  },
+  devolverPelicula: (indice) => {
+    catalogo[indice].devolver();
+  }
+}
 
 module.exports = {
-  catalogo
+  catalogo,repositorioCatalogo
 }
 
   

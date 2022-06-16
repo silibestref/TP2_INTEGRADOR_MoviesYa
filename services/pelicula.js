@@ -1,67 +1,60 @@
-const { catalogo } = require('../repositories/peliculas');
-const { carrito } = require('../repositories/carrito');
+
+const { repositorioCatalogo } = require('../repositories/peliculas');
+const { repositorioCarrito } = require('../repositories/carrito');
 const MismaPeliculaException = require('../exceptions/mismaPelicula')
 const NoExistePeliculaException = require('../exceptions/noExistePelicula')
 
 module.exports = {
-    catalogoListar : function(){
-        return catalogo;
-    },
+    
     catalogoBuscar : function(id){
         let resultado = 'Ups, lo siento! Por el momento no tenemos esa pelicula';
-        const indice = this.buscarPelicula(catalogo,id);       
+        const indice = repositorioCatalogo.buscarPelicula(id);       
         if(indice >= 0){    
-            resultado = catalogo[indice];
+            resultado = repositorioCatalogo.pedirPelicula(indice);
         }
         return resultado;
     },
     catalogoAgregar: function(pelicula){
-        const existe = this.buscarPelicula(catalogo,pelicula.codigo);
+        const existe = repositorioCatalogo.buscarPelicula(pelicula.codigo);
         if (existe >=  0) {
             console.log()
             throw new MismaPeliculaException(`La pelicula ${pelicula.titulo.toUpperCase()} ya fue ingresada.`);
         }else{
-            catalogo.push(pelicula); 
+            repositorioCatalogo.incorporarPelicula(pelicula); 
         }
 
-    },
+    },    
     catalogoEliminar : function(id){
-        const indice = this.buscarPelicula(catalogo,id); 
+        const indice = repositorioCatalogo.buscarPelicula(id);  
         let peliculaEliminada = [];
         if(indice >= 0){
-            peliculaEliminada = catalogo.splice(indice,1);
+            peliculaEliminada = repositorioCatalogo.eliminarPelicula(indice);
         }else{
             throw new NoExistePeliculaException(`La pelicula id (${id}) no se encuentra en el catalogo.`);
         }
         return peliculaEliminada;
     },
     carritoAgregar : function(id) {
-        const indice = this.buscarPelicula(catalogo,id);
+        const indice = repositorioCatalogo.buscarPelicula(id);
         if(indice >= 0){
-            carrito.push(catalogo[indice]);
-            catalogo[indice].alquilar();
+            peli = repositorioCatalogo.pedirPelicula(indice);
+            repositorioCarrito.agregarPeliCarito(peli);
+            repositorioCatalogo.alquilarPelicula(indice);            
         }
-        return carrito;
+        return repositorioCarrito.mostrarCarrito();
     },
     carritoEliminar : function(id) {
-        const indice = this.buscarPelicula(carrito,id);
-        catalogo[indice].devolver();
+        const indice = repositorioCarrito.buscarPelicula(id);       
+        repositorioCatalogo.devolverPelicula(indice);
         let peliculaEliminada = [];
         if(indice >= 0){
-            peliculaEliminada = carrito.splice(indice,1);
-            
-            
+            peliculaEliminada =  repositorioCarrito.eliminarPeliCarrito(indice);
         }
         return peliculaEliminada;
     },
     carritoMostrarAlquileres : function() {
-        return carrito;
-    },
-    buscarPelicula : function(listaPeliculas,id){
-        return listaPeliculas.map(pel => pel.codigo).indexOf(id);
-    }
-    
-
+        return repositorioCarrito.mostrarCarrito();
+    }   
 }
 
 

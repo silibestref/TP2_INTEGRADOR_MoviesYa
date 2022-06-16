@@ -1,10 +1,11 @@
 const servicePelicula = require ('../services/pelicula');
 const Pelicula = require('../models/pelicula');
+const { repositorioCatalogo } = require('../repositories/peliculas');
 
 module.exports = {  
     
     getPeliculasCatalogoController: (req,res)=>{
-        let respuesta = servicePelicula.catalogoListar();
+        let respuesta = repositorioCatalogo.verCatalogo();
         res.json(respuesta);
     },
     getPeliculaCatalogoController: (req,res)=>{
