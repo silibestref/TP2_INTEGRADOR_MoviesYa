@@ -14,6 +14,13 @@ const repositorioCarrito = {
   },
   mostrarCarrito: () => { 
     return carrito;
+  },
+  estaVacio: ()=>{
+    let resultado = false;
+    if (carrito.length == 0){
+      resultado = true;
+    }
+    return resultado;
   }
 }
 

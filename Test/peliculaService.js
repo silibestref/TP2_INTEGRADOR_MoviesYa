@@ -5,9 +5,10 @@ const spies = require('chai-spies')
 chai.use(spies)
 
 
-const {catalogoAgregar} = require ('../services/pelicula')
+const {catalogoAgregar,carritoVacio} = require ('../services/pelicula')
 const Pelicula = require('../models/pelicula')
 const MismaPeliculaException = require('../exceptions/mismaPelicula')
+const ElCarritoEstaVacio = require('../exceptions/carritoVacio')
 const {repositorioCatalogo} = require('../repositories/peliculas')
 
 describe("Service Catalogo de Peliculas", () => {
@@ -30,6 +31,13 @@ describe("Service Catalogo de Peliculas", () => {
               })
     
             expect(() => catalogoAgregar(peli)).not.to.throw(MismaPeliculaException)
+        });
+    })
+});
+describe("Service Tests sobre el carrito", () => {
+    describe("Mostrar lista de peliculas agregadas al carrito", () => {        
+        it('probamos regla de validacion: verifica primero si el carrito se encuentre vacio', async () => {
+            expect(() => carritoVacio()).to.throw(ElCarritoEstaVacio) 
         })
     })
 })

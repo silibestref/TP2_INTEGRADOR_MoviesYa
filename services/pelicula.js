@@ -3,6 +3,7 @@ const { repositorioCatalogo } = require('../repositories/peliculas');
 const { repositorioCarrito } = require('../repositories/carrito');
 const MismaPeliculaException = require('../exceptions/mismaPelicula')
 const NoExistePeliculaException = require('../exceptions/noExistePelicula')
+const ElCarritoEstaVacio = require('../exceptions/carritoVacio')
 
 module.exports = {
     
@@ -54,6 +55,11 @@ module.exports = {
     },
     carritoMostrarAlquileres : function() {
         return repositorioCarrito.mostrarCarrito();
+    },
+    carritoVacio: function(){        
+        if( repositorioCarrito.estaVacio() ){
+           throw new ElCarritoEstaVacio("El carrito se encuentra vacio actualmente");
+        }
     }   
 }
 
