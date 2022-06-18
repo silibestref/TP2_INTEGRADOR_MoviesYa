@@ -16,7 +16,6 @@ describe('#Movies Ya!', () => {
     describe("POST /carrito", () => {
         it('Alquilar pelicula', async ()=>{
             const peli = {codigo:2222, titulo:"Rocky", genero:"Accion"}
-            //const respuesta = await axios.post(`${baseURL}/carrito/${peli.codigo}`);
             chai.request(app)
             .post(`/carrito/${peli.codigo}`)
             .end((err,res)=>{
@@ -26,7 +25,6 @@ describe('#Movies Ya!', () => {
     }),    
     describe("GET /carrito", () => {
         it("Ver mis alquileres", async () => {
-            //const response = await axios.get(`${baseURL}/catalogo/`);
             chai.request(app)
             .get(`/carrito/`)
             .end((err,res)=>{                
