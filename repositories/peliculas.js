@@ -33,7 +33,7 @@ const repositorioCatalogo = {
 }
 
 module.exports = {
-  catalogo,repositorioCatalogo
+  repositorioCatalogo
 }
 
   
