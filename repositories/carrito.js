@@ -27,5 +27,5 @@ const repositorioCarrito = {
 
 
 module.exports = {
-  carrito,repositorioCarrito
+  repositorioCarrito
 }

@@ -5,7 +5,7 @@ const catalogo = [
   new Pelicula(2222, "Rocky","Accion"),
   new Pelicula(3333, "Freddy Krueger","Terror"),
   new Pelicula(4444, "Jason","Terror"),
-  new Pelicula(5555, "Depresador","Accion")
+  new Pelicula(5555, "Depredador2","Accion")
 ];
 
 const repositorioCatalogo = {

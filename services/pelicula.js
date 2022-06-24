@@ -1,9 +1,11 @@
 
 const { repositorioCatalogo } = require('../repositories/peliculas');
 const { repositorioCarrito } = require('../repositories/carrito');
+const { repositorioFavoritos } = require('../repositories/favoritos');
 const MismaPeliculaException = require('../exceptions/mismaPelicula')
 const NoExistePeliculaException = require('../exceptions/noExistePelicula')
-const ElCarritoEstaVacio = require('../exceptions/carritoVacio')
+const ElCarritoEstaVacio = require('../exceptions/carritoVacio') 
+const FavoritosNoExiste = require('../exceptions/FavoritosNoExiste') 
 
 module.exports = {
     
@@ -60,7 +62,12 @@ module.exports = {
         if( repositorioCarrito.estaVacio() ){
            throw new ElCarritoEstaVacio("El carrito se encuentra vacio actualmente");
         }
-    }   
+    },
+    favoritosVacio: function(){        
+        if( repositorioFavoritos.estaVacio() ){
+           throw new FavoritosNoExiste("Ud. no tiene peliculas en la lista de Favoritos aun");
+        }
+    } 
 }
 
 

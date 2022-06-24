@@ -2,6 +2,7 @@ const servicePelicula = require ('../services/pelicula');
 const Pelicula = require('../models/pelicula');
 const { repositorioCatalogo } = require('../repositories/peliculas');
 const { repositorioCarrito } = require('../repositories/carrito');
+const { repositorioFavoritos } = require('../repositories/favoritos');
 
 module.exports = {  
     
@@ -49,6 +50,21 @@ module.exports = {
     deletePeliculaCarritoController: (req, res)=>{
         let id = Number(req.params.codigo);
         let resultado = servicePelicula.carritoEliminar(id);
+        res.json(resultado);
+    },
+    postPeliculaFavoritosController: (req, res)=>{
+        let id = Number(req.params.codigo);
+        let resultado = servicePelicula.catalogoBuscar(id);
+        repositorioFavoritos.agregarPelicula(resultado);
+        res.sendStatus(200);
+    },
+    getPeliculasFavoritosController: (req,res)=>{
+        try{
+            servicePelicula.favoritosVacio()
+        }catch (error) {
+            console.error(error.message);
+        }        
+        let resultado = repositorioFavoritos.mostrarLista();
         res.json(resultado);
     }
 }
